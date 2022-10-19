@@ -35,6 +35,24 @@ resource "aws_route_table" "route-tables" {
   }
 }
 
+resource "aws_route" "public" {
+  route_table_id = aws_route_table.route-tables["public"].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.igw.id
+}
+
+//resource "aws_route" "private-apps" {
+//  route_table_id = aws_route_table.route-tables["public"].id
+// destination_cidr_block = "0.0.0.0/0"
+//  gateway_id = aws_internet_gateway.igw.id
+//}
+//
+//resource "aws_route" "private-db" {
+//  route_table_id = aws_route_table.route-tables["public"].id
+//  destination_cidr_block = "0.0.0.0/0"
+//  gateway_id = aws_internet_gateway.igw.id
+//}
+
 output "out" {
-  value = aws_route_table.route-tables["public"].id
+  value = module.subnets.out
 }

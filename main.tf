@@ -57,6 +57,16 @@ resource "aws_route_table_association" "public" {
   subnet_id = element(module.subnets["public"].out[*].id, count.index)
   route_table_id = aws_route_table.route-tables["public"].id
 }
+resource "aws_route" "private-apps" {
+  route_table_id = aws_route_table.route-tables["apps"].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.ngw.id
+}
+resource "aws_route" "private-db" {
+  route_table_id = aws_route_table.route-tables["db"].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id = aws_nat_gateway.ngw.id
+}
 //resource "aws_route" "private-apps" {
 //  route_table_id = aws_route_table.route-tables["public"].id
 // destination_cidr_block = "0.0.0.0/0"

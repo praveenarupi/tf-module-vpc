@@ -9,4 +9,6 @@ resource "aws_subnet" "main" {
   }
 }
 
-output 
+output "out" {
+  value = aws_subnet.main
+}

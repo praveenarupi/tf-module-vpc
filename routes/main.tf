@@ -9,3 +9,11 @@ resource "aws_route_table_association" "assoc" {
   subnet_id      = element(var.subnet_ids[var.name].subnet_ids, count.index)
   route_table_id = aws_route_table.route-tables.id
 }
+
+resource "aws_route" "public" {
+  count                  = var.igw ? 1 : 0
+  route_table_id         = aws_route_table.route-tables.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = var.gateway_id
+}
+

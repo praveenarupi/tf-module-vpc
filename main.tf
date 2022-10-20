@@ -25,6 +25,8 @@ module "routes" {
   vpc_id = aws_vpc.main.id
   name = each.value["name"]
   subnet_ids = module.subnets
+  gateway_id = aws_internet_gateway.igw.id
+  nat_gateway_id = aws_nat_gateway.ngw.id
 }
 
 resource "aws_internet_gateway" "igw" {

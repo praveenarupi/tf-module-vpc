@@ -19,6 +19,13 @@ module "subnets" {
   // route_tables = aws_route_table.route-tables
 }
 
+module "routes" {
+  for_each = var.subnets
+  source = "./routes"
+  vpc_id = aws_vpc.main.id
+  name = each.value["name"]
+}
+
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
@@ -39,14 +46,7 @@ resource "aws_nat_gateway" "ngw" {
   }
 }
 
-//resource "aws_route_table" "route-tables" {
-//  for_each = var.subnets
-//  vpc_id = aws_vpc.main.id
-//  tags = {
-//    Name = "${each.value["name"]}-rt"
-//  }
-//}
-//
+
 //resource "aws_route" "public" {
 //  route_table_id = aws_route_table.route-tables["public"].id
 //  destination_cidr_block = "0.0.0.0/0"

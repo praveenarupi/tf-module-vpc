@@ -83,3 +83,10 @@ resource "aws_vpc_peering_connection" "peering-to-default-vpc" {
   vpc_id      = var.default_vpc_id
   auto_accept = true
 }
+
+resource "aws_route" "peering" {
+  for_each = var.subnets
+  route_table_id = aws_route_table.route-tables[each.value["name"]].id
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_peering_connection_id = aws_vpc_peering_connection.peering-to-default-vpc.id
+}

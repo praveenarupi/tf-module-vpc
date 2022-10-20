@@ -54,5 +54,5 @@ resource "aws_route" "public" {
 //}
 
 output "out" {
-  value = module.subnets
+  value = module.subnets["public"].out.id
 }

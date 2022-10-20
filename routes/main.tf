@@ -24,4 +24,9 @@ resource "aws_route" "private" {
   nat_gateway_id             = var.nat_gateway_id
 }
 
+resource "aws_route" "peering" {
+  route_table_id            = aws_route_table.route-tables.id
+  destination_cidr_block    = var.default_vpc_cidr
+  vpc_peering_connection_id = var.vpc_peering_connection_id
+}
 

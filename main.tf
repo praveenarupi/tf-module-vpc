@@ -77,18 +77,9 @@ resource "aws_route_table_association" "db" {
   subnet_id = element(module.subnets["db"].out[*].id, count.index)
   route_table_id = aws_route_table.route-tables["db"].id
 }
-//resource "aws_route" "private-apps" {
-//  route_table_id = aws_route_table.route-tables["public"].id
-// destination_cidr_block = "0.0.0.0/0"
-//  gateway_id = aws_internet_gateway.igw.id
-//}
-//
-//resource "aws_route" "private-db" {
-//  route_table_id = aws_route_table.route-tables["public"].id
-//  destination_cidr_block = "0.0.0.0/0"
-//  gateway_id = aws_internet_gateway.igw.id
-//}
 
-output "out" {
-  value = module.subnets["public"].out[*].id
+resource "aws_vpc_peering_connection" "peering-to-default-vpc" {
+  peer_vpc_id = aws_vpc.main.id
+  vpc_id      = var.default_vpc_id
+  auto_accept = true
 }

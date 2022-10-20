@@ -43,9 +43,10 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = module.subnets["public"].out[0].id
+  subnet_id     = module.subnets["public"].subnets[0].id
+
   tags = {
-    Name = "${var.env}-ngw"
+    Name = "gw NAT"
   }
 }
 
@@ -61,3 +62,9 @@ resource "aws_route" "peering-route-on-default-route-table" {
   destination_cidr_block    = var.cidr_block
   vpc_peering_connection_id = aws_vpc_peering_connection.peering-to-default-vpc.id
 }
+
+//### Route53 add
+//resource "aws_route53_zone_association" "zone" {
+//  zone_id = data.aws_route53_zone.private.zone_id
+//  vpc_id  = aws_vpc.main.id
+//}

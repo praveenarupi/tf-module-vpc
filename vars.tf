@@ -3,4 +3,5 @@ variable "subnets" {}
 variable "env" {}
 variable "AZ" {}
 variable "default_vpc_id" {}
+variable "default_vpc_cidr" {}
 

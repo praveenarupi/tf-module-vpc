@@ -27,6 +27,8 @@ module "routes" {
   subnet_ids = module.subnets
   gateway_id = aws_internet_gateway.igw.id
   nat_gateway_id = aws_nat_gateway.ngw.id
+  ngw = try(each.value["ngw"], false)
+  igw = try(each.value["igw"], false)
 }
 
 resource "aws_internet_gateway" "igw" {

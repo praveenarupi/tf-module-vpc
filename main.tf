@@ -24,6 +24,7 @@ module "routes" {
   source = "./routes"
   vpc_id = aws_vpc.main.id
   name = each.value["name"]
+  subnet_ids = module.subnets
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -72,12 +73,7 @@ resource "aws_nat_gateway" "ngw" {
 //  subnet_id = element(module.subnets["apps"].out[*].id, count.index)
 //  route_table_id = aws_route_table.route-tables["apps"].id
 //}
-//resource "aws_route_table_association" "db" {
-//  count = length(module.subnets["db"].out[*].id)
-//  subnet_id = element(module.subnets["db"].out[*].id, count.index)
-//  route_table_id = aws_route_table.route-tables["db"].id
-//}
-//
+
 //resource "aws_vpc_peering_connection" "peering-to-default-vpc" {
 //  peer_vpc_id = aws_vpc.main.id
 //  vpc_id      = var.default_vpc_id

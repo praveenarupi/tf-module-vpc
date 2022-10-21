@@ -29,9 +29,6 @@ module "routes" {
   vpc_peering_connection_id = aws_vpc_peering_connection.peering-to-default-vpc.id
 }
 
-output "out" {
-  value = module.subnets
-}
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
